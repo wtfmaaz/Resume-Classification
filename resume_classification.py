@@ -65,7 +65,6 @@ def preprocess(sentence):
     cleantext = re.sub(cleanr, '', sentence)
     rem_url = re.sub(r'http\S+', '',cleantext)
     rem_num = re.sub('[0-9]+', '', rem_url)
-    filtered_words = [w for w in tokens if len(w) > 2 if not w in stopwords.words('english')]
     lemmatizer = WordNetLemmatizer()
     lemma_words = [lemmatizer.lemmatize(w) for w in filtered_words]
     return " ".join(lemma_words)
@@ -86,7 +85,6 @@ upload_file = st.file_uploader('Upload Your Resumes', type= ['docx','pdf'],accep
 for doc_file in upload_file:
     if doc_file is not None:
         filename.append(doc_file.name)
-        cleaned = preprocess(doc_file)
         prediction = model.predict(Vectorizer.transform([cleaned]))[0]
         predicted.append(prediction)
         extText = getText(doc_file)
