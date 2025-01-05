@@ -42,24 +42,22 @@ st.subheader('Welcome to Resume Classification App')
 
 # FUNCTIONS
 def extract_skills(resume_text):
-    nlp_text = nlp(resume_text)
-    noun_chunks = nlp_text.noun_chunks
-    tokens = [token.text for token in nlp_text if not token.is_stop] # removing stop words and implementing word tokenization
-
-    data = pd.read_csv(r"/content/Cleaned_Resumes.csv") # reading the csv file
-    skills = list(data.columns.values) # extract values
+    tokens = resume_text.split()  # Tokenizing the resume text
+    
+    # Assuming the skills list from the CSV is already loaded
+    data = pd.read_csv(r"/content/Cleaned_Resumes.csv")
+    skills = list(data.columns.values)  # Extract skill values from the CSV file
     skillset = []
 
-    for token in tokens: # check for one-grams (example: python)
+    # Token-based check for skills (one-grams)
+    for token in tokens:
         if token.lower() in skills:
             skillset.append(token)
 
-    for token in noun_chunks: # check for bi-grams and tri-grams (example: machine learning)
-        token = token.text.lower().strip()
-        if token in skills:
-            skillset.append(token)
-    return [i.capitalize() for i in set([i.lower() for i in skillset])]
+    # Assuming you may still want to check for noun chunks or other multi-word skills
+    # If you plan to use multi-word skills, you can write custom logic to check for them
 
+    return [i.capitalize() for i in set([i.lower() for i in skillset])]
 def getText(filename):
     fullText = '' # Create empty string
     if filename.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
