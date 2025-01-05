@@ -20,7 +20,6 @@ try:
     stopwords.words('english')
 except LookupError:
     nltk.download('stopwords')
-    def preprocess(sentence):
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
