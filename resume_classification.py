@@ -19,10 +19,21 @@ nltk.download('wordnet')
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
-import spacy
-from spacy.cli import download
-download('en_core_web_sm')
-nlp = spacy.load("en_core_web_sm")
+from textblob import Word
+
+def preprocess(sentence):
+    sentence = str(sentence)
+    sentence = sentence.lower()
+    sentence = sentence.replace('{html}', "")
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', sentence)
+    rem_url = re.sub(r'http\S+', '', cleantext)
+    rem_num = re.sub('[0-9]+', '', rem_url)
+    tokenizer = RegexpTokenizer(r'\w+')
+    tokens = tokenizer.tokenize(rem_num)
+    filtered_words = [w for w in tokens if len(w) > 2 if not w in stopwords.words('english')]
+    lemma_words = [Word(w).lemmatize() for w in filtered_words]
+    return " ".join(lemma_words)
 #----------------------------------------------------------------------------------------------------
 
 st.title('RESUME CLASSIFICATION')
