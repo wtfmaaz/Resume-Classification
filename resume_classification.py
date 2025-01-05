@@ -16,6 +16,24 @@ import docx2txt
 import streamlit as st
 import nltk
 nltk.download('wordnet')
+try:
+    stopwords.words('english')
+except LookupError:
+    nltk.download('stopwords')
+    def preprocess(sentence):
+    sentence = str(sentence)
+    sentence = sentence.lower()
+    sentence = sentence.replace('{html}',"")
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', sentence)
+    rem_url = re.sub(r'http\S+', '',cleantext)
+    rem_num = re.sub('[0-9]+', '', rem_url)
+    tokenizer = RegexpTokenizer(r'\w+')
+    tokens = tokenizer.tokenize(rem_num)
+    filtered_words = [w for w in tokens if len(w) > 2 if not w in stopwords.words('english')]
+    lemmatizer = WordNetLemmatizer()
+    lemma_words = [lemmatizer.lemmatize(w) for w in filtered_words]
+    return " ".join(lemma_words)
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
