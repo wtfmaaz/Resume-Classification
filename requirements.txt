@@ -8,3 +8,4 @@ spacy
 nltk
 PyPDF2
 python-docx
+docx2txt
