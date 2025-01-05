@@ -42,21 +42,7 @@ def extract_skills(resume_text):
             skillset.append(token)
     return [i.capitalize() for i in set([i.lower() for i in skillset])]
 
-def getText(filename):
-    fullText = '' # Create empty string
-    if filename.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        doc = docx2txt.process(filename)
-        for para in doc:
-            fullText = fullText + para
-    else:
-        with pdfplumber.open(filename) as pdf_file:
-            pdoc = PyPDF2.PdfFileReader(filename)
-            number_of_pages = pdoc.getNumPages()
-            page = pdoc.pages[0]
-            page_content = page.extractText()
-        for paragraph in page_content:
-            fullText =  fullText + paragraph
-    return (fullText)
+
 def preprocess(sentence):
     sentence = str(sentence)
     sentence = sentence.lower()
