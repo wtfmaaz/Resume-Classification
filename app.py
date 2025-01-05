@@ -93,18 +93,7 @@ if len(filename) == len(predicted) == len(skills):
     st.table(file_type.style.format())
 else:
     st.error("Error: Mismatched lengths in data arrays. Please check your input data.")
-if uploaded_files:
-    file_data = {"Uploaded File": [], "Predicted Profile": [], "Skills": []}
-    for file in uploaded_files:
-        file_data["Uploaded File"].append(file.name)
-        try:
-            if file.name.endswith(".pdf"):
-                text = extract_text_from_pdf(file)
-            elif file.name.endswith(".docx"):
-                text = extract_text_from_docx(file)
-            else:
-                st.error(f"Unsupported file type: {file.name}")
-                continue
+
 
 
             # Preprocess text and predict
