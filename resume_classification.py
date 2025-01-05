@@ -42,9 +42,9 @@ def train_model():
     st.write("Model Accuracy:", accuracy)
 
     # Save the model and vectorizer for later use
-    with open("resume_model.pkl", "wb") as f:
+    with open("/content/modelDT.pkl", "wb") as f:
         pickle.dump(model, f)
-    with open("vectorizer.pkl", "wb") as f:
+    with open("/content/vector.pkl", "wb") as f:
         pickle.dump(vectorizer, f)
 
     st.success("Model training completed!")
@@ -52,9 +52,9 @@ def train_model():
 # Function to classify a new resume
 def classify_resume(resume_text):
     # Load the trained model and vectorizer
-    with open("resume_model.pkl", "rb") as f:
+    with open("/content/modelDT.pkl", "rb") as f:
         model = pickle.load(f)
-    with open("vectorizer.pkl", "rb") as f:
+    with open("/content/vector.pkl", "rb") as f:
         vectorizer = pickle.load(f)
 
     # Transform the input text
