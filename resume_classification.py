@@ -57,17 +57,6 @@ def getText(filename):
         for paragraph in page_content:
             fullText =  fullText + paragraph
     return (fullText)
-
-def display(doc_file):
-    resume = []
-    if doc_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        resume.append(docx2txt.process(doc_file))
-    else:
-        with pdfplumber.open(doc_file) as pdf:
-            pages=pdf.pages[0]
-            resume.append(pages.extract_text())
-    return resume
-
 def preprocess(sentence):
     sentence = str(sentence)
     sentence = sentence.lower()
