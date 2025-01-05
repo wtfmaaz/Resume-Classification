@@ -13,7 +13,6 @@ Original file is located at
 import re
 import pandas as pd
 import streamlit as st
-import en_core_web_sm
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
