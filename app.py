@@ -21,10 +21,7 @@ st.subheader('Welcome to the Resume Classification App')
 model = pk.load(open('modelDT.pkl', 'rb'))
 vectorizer = pk.load(open('vector.pkl', 'rb'))
 
-# File uploader
-uploaded_files = st.file_uploader(
-    "Upload Your Resumes (PDF/DOCX)", type=["pdf", "docx"], accept_multiple_files=True
-)
+
 
 # Helper function: Extract text from resumes
 def extract_text_from_pdf(pdf_file):
