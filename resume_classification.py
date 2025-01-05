@@ -14,9 +14,6 @@ import re
 import pandas as pd
 import streamlit as st
 
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import RegexpTokenizer
 
 #----------------------------------------------------------------------------------------------------
 
