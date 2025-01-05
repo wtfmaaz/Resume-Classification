@@ -21,10 +21,6 @@ try:
 except LookupError:
     nltk.download('stopwords')
     def preprocess(sentence):
-    filtered_words = [w for w in tokens if len(w) > 2 if not w in stopwords.words('english')]
-    lemmatizer = WordNetLemmatizer()
-    lemma_words = [lemmatizer.lemmatize(w) for w in filtered_words]
-    return " ".join(lemma_words)
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
