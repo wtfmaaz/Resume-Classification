@@ -7,15 +7,12 @@ Original file is located at
     https://colab.research.google.com/drive/1UFs2lFEUUeJ1RcAL0WiIFfJbcp_FqM5u
 """
 
-pip install streamlit
+
 
 # IMPORT LIBRARIES
 import re
 import pandas as pd
 import streamlit as st
-
-import en_core_web_sm
-nlp = en_core_web_sm.load()
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
