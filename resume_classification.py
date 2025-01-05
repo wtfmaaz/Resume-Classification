@@ -19,7 +19,8 @@ nltk.download('wordnet')
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
-
+import spacy
+nlp = spacy.load("en_core_web_sm")
 #----------------------------------------------------------------------------------------------------
 
 st.title('RESUME CLASSIFICATION')
