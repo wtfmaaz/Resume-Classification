@@ -68,6 +68,18 @@ def preprocess_text(text):
     return " ".join(words)
 
 # Main logic
+# Check the lengths of the lists
+if len(filename) == len(predicted) == len(skills):
+    # Create DataFrame if lengths are equal
+    file_type = pd.DataFrame({
+        'Uploaded File': filename,
+        'Predicted Profile': predicted,
+        'Skills': skills
+    })
+    st.table(file_type.style.format())
+else:
+    st.error("Error: Mismatched lengths in data arrays. Please check your input data.")
+
 if uploaded_files:
     file_data = {"Uploaded File": [], "Predicted Profile": [], "Skills": []}
     for file in uploaded_files:
