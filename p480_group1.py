@@ -2,17 +2,6 @@
 
 """#### ***7. Model Deployment***
 
-##### ***7.1 Pickle File***
-"""
-
-import pickle
-filename = 'modelDT.pkl'
-pickle.dump(model_DT,open(filename,'wb'))
-
-import pickle
-filename = 'vector.pkl'
-pickle.dump(tfidf_vector,open(filename,'wb'))
-
 # Streamlit app
 st.title("Resume Classification App")
 st.write("Upload a resume or type text to classify it into predefined categories.")
