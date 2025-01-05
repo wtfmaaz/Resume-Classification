@@ -4,3 +4,7 @@ numpy
 matplotlib
 scikit-learn
 tensorflow
+spacy
+nltk
+PyPDF2
+python-docx
