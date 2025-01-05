@@ -21,13 +21,6 @@ try:
 except LookupError:
     nltk.download('stopwords')
     def preprocess(sentence):
-    sentence = sentence.replace('{html}',"")
-    cleanr = re.compile('<.*?>')
-    cleantext = re.sub(cleanr, '', sentence)
-    rem_url = re.sub(r'http\S+', '',cleantext)
-    rem_num = re.sub('[0-9]+', '', rem_url)
-    tokenizer = RegexpTokenizer(r'\w+')
-    tokens = tokenizer.tokenize(rem_num)
     filtered_words = [w for w in tokens if len(w) > 2 if not w in stopwords.words('english')]
     lemmatizer = WordNetLemmatizer()
     lemma_words = [lemmatizer.lemmatize(w) for w in filtered_words]
