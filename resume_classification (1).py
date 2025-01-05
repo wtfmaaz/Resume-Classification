@@ -46,7 +46,7 @@ def extract_skills(resume_text):
     tokens = resume_text.split()  # Tokenizing the resume text
 
     # Assuming the skills list from the CSV is already loaded
-    data = pd.read_csv(r"/content/Cleaned_Resumes.csv")
+    data = pd.read_csv(r"Cleaned_Resumes.csv")
     skills = list(data.columns.values)  # Extract skill values from the CSV file
     skillset = []
 
