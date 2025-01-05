@@ -7,15 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1HqYgEK0lYGupQ22DKCWF4M_k5oJgSs2z
 """
 
-pip install streamlit
-
-pip install nltk
-
-pip install stopwords
-
-pip install textblob
-
-pip install docx2txt
 
 # -*- coding: utf-8 -*-
 """Resume classification
