@@ -11,8 +11,6 @@ import PyPDF2
 from io import StringIO
 import pickle as pk
 
-# Load Spacy model
-nlp = spacy.load("en_core_web_sm")
 
 # Title and Description
 st.title('Resume Classification')
