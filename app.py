@@ -68,9 +68,26 @@ def preprocess_text(text):
     return " ".join(words)
 
 # Main logic
-# Check the lengths of the lists
+# Initialize the lists outside of the loop to avoid the NameError
+filename = []
+predicted = []
+skills = []
+
+# File upload logic
+upload_file = st.file_uploader('Upload Your Resumes', type=['docx', 'pdf'], accept_multiple_files=True)
+
+for doc_file in upload_file:
+    if doc_file is not None:
+        filename.append(doc_file.name)
+
+        # Simulate predicted profile and skills extraction for testing
+        # Replace this with actual logic for predictions and skill extraction
+        predicted.append("Example Profile")  # Dummy value for prediction
+        skills.append(["Example Skill 1", "Example Skill 2"])  # Dummy value for skills
+
+# Now check if the lengths of the lists are the same
 if len(filename) == len(predicted) == len(skills):
-    # Create DataFrame if lengths are equal
+    # Create DataFrame only if lengths are the same
     file_type = pd.DataFrame({
         'Uploaded File': filename,
         'Predicted Profile': predicted,
