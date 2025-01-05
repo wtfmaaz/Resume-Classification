@@ -20,6 +20,10 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
 from textblob import Word
+import stopwords
+
+stop_words = stopwords.get_stopwords("en")
+filtered_words = [w for w in tokens if len(w) > 2 and w not in stop_words]
 
 def preprocess(sentence):
     sentence = str(sentence)
