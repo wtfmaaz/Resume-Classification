@@ -300,10 +300,6 @@ import pickle
 filename = 'vector.pkl'
 pickle.dump(tfidf_vector,open(filename,'wb'))
 
-pip install streamlit
-
-import streamlit as st
-
 # Streamlit app
 st.title("Resume Classification App")
 st.write("Upload a resume or type text to classify it into predefined categories.")
