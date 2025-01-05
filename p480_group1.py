@@ -1,8 +1,6 @@
 
 
-"""#### ***7. Model Deployment***
 
-# Streamlit app
 st.title("Resume Classification App")
 st.write("Upload a resume or type text to classify it into predefined categories.")
 
