@@ -88,7 +88,7 @@ upload_file = st.file_uploader('Upload Your Resumes', type= ['docx','pdf'],accep
 for doc_file in upload_file:
     if doc_file is not None:
         filename.append(doc_file.name)
-        cleaned = preprocess(display(doc_file))
+        cleaned = preprocess(doc_file)
         prediction = model.predict(Vectorizer.transform([cleaned]))[0]
         predicted.append(prediction)
         extText = getText(doc_file)
