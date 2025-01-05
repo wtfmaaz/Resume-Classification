@@ -15,7 +15,6 @@ import pandas as pd
 import docx2txt
 import streamlit as st
 import nltk
-nltk.download('stopwords')
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
