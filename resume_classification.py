@@ -21,7 +21,6 @@ try:
 except LookupError:
     nltk.download('stopwords')
     def preprocess(sentence):
-    sentence = sentence.lower()
     sentence = sentence.replace('{html}',"")
     cleanr = re.compile('<.*?>')
     cleantext = re.sub(cleanr, '', sentence)
