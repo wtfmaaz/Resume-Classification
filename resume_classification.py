@@ -12,6 +12,7 @@ Original file is located at
 # IMPORT LIBRARIES
 import re
 import pandas as pd
+import docx2txt
 import streamlit as st
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
