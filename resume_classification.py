@@ -72,8 +72,6 @@ for doc_file in upload_file:
     if doc_file is not None:
         filename.append(doc_file.name)
      
-        skills.append(extract_skills(extText))
-
 if len(predicted) > 0:
     file_type['Uploaded File'] = filename
     file_type['Skills'] = skills
