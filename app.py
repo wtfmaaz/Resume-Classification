@@ -21,7 +21,17 @@ st.subheader('Welcome to the Resume Classification App')
 model = pk.load(open('modelDT.pkl', 'rb'))
 vectorizer = pk.load(open('vector.pkl', 'rb'))
 
+# Initialize the lists outside of the loop to avoid the NameError
+filename = []
+predicted = []
+skills = []
 
+# File upload logic
+upload_file = st.file_uploader('Upload Your Resumes', type=['docx', 'pdf'], accept_multiple_files=True)
+
+for doc_file in upload_file:
+    if doc_file is not None:
+        filename.append(doc_file.name)
 
 # Helper function: Extract text from resumes
 def extract_text_from_pdf(pdf_file):
@@ -65,17 +75,7 @@ def preprocess_text(text):
     return " ".join(words)
 
 # Main logic
-# Initialize the lists outside of the loop to avoid the NameError
-filename = []
-predicted = []
-skills = []
 
-# File upload logic
-upload_file = st.file_uploader('Upload Your Resumes', type=['docx', 'pdf'], accept_multiple_files=True)
-
-for doc_file in upload_file:
-    if doc_file is not None:
-        filename.append(doc_file.name)
 
         # Simulate predicted profile and skills extraction for testing
         # Replace this with actual logic for predictions and skill extraction
@@ -93,7 +93,18 @@ if len(filename) == len(predicted) == len(skills):
     st.table(file_type.style.format())
 else:
     st.error("Error: Mismatched lengths in data arrays. Please check your input data.")
-
+if uploaded_files:
+    file_data = {"Uploaded File": [], "Predicted Profile": [], "Skills": []}
+    for file in uploaded_files:
+        file_data["Uploaded File"].append(file.name)
+        try:
+            if file.name.endswith(".pdf"):
+                text = extract_text_from_pdf(file)
+            elif file.name.endswith(".docx"):
+                text = extract_text_from_docx(file)
+            else:
+                st.error(f"Unsupported file type: {file.name}")
+                continue
 
 
             # Preprocess text and predict
