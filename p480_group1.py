@@ -1,38 +1,5 @@
 
 
-"""##### ***6.1 Train and Test Accuracy Plot***"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-rcParams = {'xtick.labelsize':'12','ytick.labelsize':'14','axes.labelsize':'16'}
-fig, axe = plt.subplots(1,1, figsize=(12,6), dpi=500)
-x_pos = np.arange(len(table))
-model_names = ["KNN", "Decision T", "Random F", "SVM ", "Logistic", "Bagging", "Ada Boost", "Grad Boost","Naive Bayes"]
-
-bar1 = plt.bar(x_pos - 0.2, table['Train_Accuracy(%)'], width=0.4, label='Train', color= "Orange")
-bar2 = plt.bar(x_pos + 0.2, table['Test_Accuracy(%)'], width=0.4, label='Test', color= "b")
-plt.xticks(x_pos, model_names)
-
-plt.xlabel("Classifiers", fontsize = 16, fontweight = 'bold')
-plt.ylabel("Accuracy", fontsize = 16, fontweight = 'bold')
-plt.title("Model Accuracy Scores", fontsize = 18, fontweight = 'bold')
-plt.xticks(rotation = 10)
-plt.legend()
-
-for i, bar in enumerate(bar1):
-    plt.text(bar.get_x() + bar.get_width()/2 - 0.1, bar.get_height()*1.02,
-             s = '{:.2f}%'.format(Train_accuracies[i]), fontsize = 7)
-
-for i, bar in enumerate(bar2):
-    plt.text(bar.get_x() + bar.get_width()/2 - 0.1, bar.get_height()*1.02,
-             s = '{:.2f}%'.format(Test_accuracies[i]), fontsize = 7)
-
-pylab.rcParams.update(rcParams)
-fig.tight_layout()
-plt.show()
-fig.savefig('IMG\Mod_Acc_Bar', dpi = 500)
-
 """#### ***7. Model Deployment***
 
 ##### ***7.1 Pickle File***
