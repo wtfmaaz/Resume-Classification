@@ -14,8 +14,7 @@ import re
 import pandas as pd
 import streamlit as st
 
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import RegexpTokenizer
+
 
 #----------------------------------------------------------------------------------------------------
 
