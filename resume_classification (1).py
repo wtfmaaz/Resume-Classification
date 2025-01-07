@@ -48,7 +48,7 @@ def extract_skills(resume_text):
     # Assuming the skills list from the CSV is already loaded
     from google.colab import files
 uploaded = files.upload()
-    data = pd.read_csv("Cleaned_Resumes.csv")
+    data = pd.read_csv("wtfmaaz/Resume-Classification/Cleaned_Resumes.csv")
     skills = list(data.columns.values)  # Extract skill values from the CSV file
     skillset = []
 
