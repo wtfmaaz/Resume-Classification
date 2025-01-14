@@ -51,7 +51,7 @@ try:
             st.error("The CSV file is empty or not loaded properly.")
             return []
     skills = list(data.columns.values)  # Extract skill values from the CSV file
-    skillset = []
+    skillset = set()
   tokens = resume_text.split()  # Tokenizing the resume text
     # Token-based check for skills (one-grams)
     for token in tokens:
