@@ -45,87 +45,93 @@ st.subheader('Welcome to Resume Classification App')
 # FUNCTIONS
 def extract_skills(resume_text):
     tokens = resume_text.split()  # Tokenizing the resume text
+    
     # Assuming the skills list from the CSV is already loaded
     data = pd.read_csv(r"Cleaned_Resumes.csv")
     skills = list(data.columns.values)  # Extract skill values from the CSV file
-    skillset = set()
+    skillset = [] 
+    
     # Token-based check for skills (one-grams)
     for token in tokens:
-       if token.lower() in [skill.lower() for skill in skills]:
-                skillset.add(token.lower())
+      if token.lower() in skills:
+            skillset.append(token)
 
-        # Return the list of unique skills (capitalized for readability)
-        return [skill.capitalize() for skill in skillset]
+    # Assuming you may still want to check for noun chunks or other multi-word skills
+    # If you plan to use multi-word skills, you can write custom logic to check for them
 
-    except Exception as e:
-        st.error(f"Error while extracting skills: {e}")
-        return []
-
-# Function to extract text from files
+    return [i.capitalize() for i in set([i.lower() for i in skillset])]
 def getText(filename):
-    try:
-        if filename.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-            return docx2txt.process(filename)
-        else:
-            with pdfplumber.open(filename) as pdf:
-                content = ''
-                for page in pdf.pages:
-                    content += page.extract_text()
-                return content
-    except Exception as e:
-        st.error(f"Error processing file: {filename.name}. {e}")
-        return ""
+    fullText = '' # Create empty string
+    if filename.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        doc = docx2txt.process(filename)
+        for para in doc:
+            fullText = fullText + para
+    else:
+        with pdfplumber.open(filename) as pdf_file:
+            pdoc = PyPDF2.PdfFileReader(filename)
+            number_of_pages = pdoc.getNumPages()
+            page = pdoc.pages[0]
+            page_content = page.extractText()
+        for paragraph in page_content:
+            fullText =  fullText + paragraph
+    return (fullText)
 
-# Display function
 def display(doc_file):
+    resume = []
     if doc_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        return docx2txt.process(doc_file)
+        resume.append(docx2txt.process(doc_file))
     else:
         with pdfplumber.open(doc_file) as pdf:
-            return pdf.pages[0].extract_text()
+            pages=pdf.pages[0]
+            resume.append(pages.extract_text())
+    return resume
 
-# Initialize data storage
-file_type = pd.DataFrame([], columns=['Uploaded File', 'Predicted Profile', 'Skills'])
+def preprocess(sentence):
+    sentence = str(sentence)
+    sentence = sentence.lower()
+    sentence = sentence.replace('{html}',"")
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', sentence)
+    rem_url = re.sub(r'http\S+', '',cleantext)
+    rem_num = re.sub('[0-9]+', '', rem_url)
+    tokenizer = RegexpTokenizer(r'\w+')
+    tokens = tokenizer.tokenize(rem_num)
+    filtered_words = [w for w in tokens if len(w) > 2 if not w in stopwords.words('english')]
+    lemmatizer = WordNetLemmatizer()
+    lemma_words = [lemmatizer.lemmatize(w) for w in filtered_words]
+    return " ".join(lemma_words)
+
+file_type=pd.DataFrame([], columns=['Uploaded File',  'Predicted Profile','Skills',])
 filename = []
 predicted = []
 skills = []
 
-# Load the model and vectorizer
+#-------------------------------------------------------------------------------------------------
+# MAIN CODE
 import pickle as pk
-model = pk.load(open(r'modelDT.pkl', 'rb'))
-Vectorizer = pk.load(open(r'vector.pkl', 'rb'))
+model = pk.load(open(r'/content/modelDT.pkl', 'rb'))
+Vectorizer = pk.load(open(r'/content/vector.pkl', 'rb'))
 
-# File uploader
-upload_file = st.file_uploader('Upload Your Resumes', type=['docx', 'pdf'], accept_multiple_files=True)
+upload_file = st.file_uploader('Upload Your Resumes', type= ['docx','pdf'],accept_multiple_files=True)
 
 for doc_file in upload_file:
     if doc_file is not None:
         filename.append(doc_file.name)
-
-        # Preprocess the resume text for prediction
-        resume_text = preprocess(display(doc_file))
-        prediction = model.predict(Vectorizer.transform([resume_text]))[0]
+        cleaned = preprocess(display(doc_file))
+        prediction = model.predict(Vectorizer.transform([cleaned]))[0]
         predicted.append(prediction)
+        extText = getText(doc_file)
+        skills.append(extract_skills(extText))
 
-        # Extract skills
-        extracted_text = getText(doc_file)
-        skill_list = extract_skills(extracted_text)
-        skills.append(skill_list)
-
-        # Debug: Print extracted skills for each file
-        st.write(f"Skills extracted from {doc_file.name}: {skill_list}")
-
-# Display results
 if len(predicted) > 0:
     file_type['Uploaded File'] = filename
-    file_type['Skills'] = [", ".join(skill) if skill else "No skills identified" for skill in skills]
+    file_type['Skills'] = skills
     file_type['Predicted Profile'] = predicted
     st.table(file_type.style.format())
 
-# Dropdown for filtering profiles
-select = ['PeopleSoft', 'SQL Developer', 'React JS Developer', 'Workday']
+select = ['PeopleSoft','SQL Developer','React JS Developer','Workday']
 st.subheader('Select as per Requirement')
-option = st.selectbox('Fields', select)
+option = st.selectbox('Fields',select)
 
 if option == 'PeopleSoft':
     st.table(file_type[file_type['Predicted Profile'] == 'PeopleSoft'])
