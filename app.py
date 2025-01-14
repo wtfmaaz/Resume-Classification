@@ -44,7 +44,6 @@ st.subheader('Welcome to Resume Classification App')
 
 # FUNCTIONS
 def extract_skills(resume_text):
-    tokens = resume_text.split()  # Tokenizing the resume text
 try:
     # Assuming the skills list from the CSV is already loaded
     data = pd.read_csv(r"Cleaned_Resumes.csv")
