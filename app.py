@@ -48,7 +48,6 @@ def extract_skills(resume_text):
     data = pd.read_csv(r"Cleaned_Resumes.csv")
     skills = list(data.columns.values)  # Extract skill values from the CSV file
     skillset = set()
-  tokens = resume_text.split()  # Tokenizing the resume text
     # Token-based check for skills (one-grams)
     for token in tokens:
        if token.lower() in [skill.lower() for skill in skills]:
